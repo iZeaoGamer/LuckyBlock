@@ -27,9 +27,9 @@ use pocketmine\entity\Entity;
 use pocketmine\level\Explosion;
 use pocketmine\level\Position;
 use pocketmine\plugin\Plugin;
-use pocketmine\scheduler\PluginTask;
+use pocketmine\scheduler\Task;
 
-class TaskExplodeMob extends PluginTask
+class TaskExplodeMob extends Task
 {
     /** @var Entity */
     private $entity;
@@ -38,12 +38,11 @@ class TaskExplodeMob extends PluginTask
 
     public function __construct(Plugin $owner, Entity $entity, $radius = 3)
     {
-        parent::__construct($owner);
         $this->entity = $entity;
         $this->radius = $radius;
     }
 
-    public function onRun($currentTick)
+    public function onRun(int $currentTick)
     {
         $explosion = new Explosion(new Position($this->entity->getX(), $this->entity->getY(), $this->entity->getZ(), $this->entity->getLevel()), $this->radius);
         if (!$this->entity->isAlive())
